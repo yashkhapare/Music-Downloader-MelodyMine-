@@ -45,7 +45,7 @@
     <div class="song-details">
       <span>{{ song['name'] }}</span>
       <span>BY {{ song['artists']['primary'][0]['name']}}</span>
-      <span>{{ song['duration']}} Seconds</span>
+      <span class="duration" data-seconds="{{ song['duration'] }}"></span>
     </div>
     <audio src="{{ song['downloadUrl'][-1]['url']}}" controls></audio>
   </div>
@@ -96,6 +96,20 @@
         });
       });
     });
+
+    document.querySelectorAll(".duration").forEach(el => {
+  let seconds = parseInt(el.dataset.seconds);
+
+  let hrs = Math.floor(seconds / 3600);
+  let mins = Math.floor((seconds % 3600) / 60);
+  let secs = seconds % 60;
+
+  el.innerText =
+    hrs > 0
+      ? `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`
+      : `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+});
+
   </script>
 
 
